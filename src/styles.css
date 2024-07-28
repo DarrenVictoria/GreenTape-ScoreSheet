@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100..900&display=swap');
+
+
+html,
+body {
+    height: 100%;
+    font-family: 'Raleway', sans-serif;
+    color: '#095540';
+    scroll-behavior: smooth;
+}

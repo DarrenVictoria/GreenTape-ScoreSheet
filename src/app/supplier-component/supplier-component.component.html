@@ -1,3 +1,29 @@
-<p>
-  supplier-component works!
-</p>
+<div>
+  <h3>Supplier Details for {{member.name}} - {{category.name}} - {{section.name}}</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Answers</th>
+        <th>Score per Question</th>
+        <th>Score per Category</th>
+        <th>Score per Section</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <ul>
+            <li *ngFor="let question of section.questions">{{question.answer}}</li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li *ngFor="let question of section.questions">{{question.score}}</li>
+          </ul>
+        </td>
+        <td><!-- Calculate and display category score --></td>
+        <td><!-- Calculate and display section score --></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

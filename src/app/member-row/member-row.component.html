@@ -1,3 +1,26 @@
-<p>
-  member-row works!
-</p>
+<ng-container *ngFor="let category of member.categories">
+  <ng-container *ngFor="let section of category.sections">
+    <tr>
+      <td>{{member.name}}</td>
+      <td>{{category.name}}</td>
+      <td>{{section.name}}</td>
+      <td>{{section.sectionWeight}}%</td>
+      <td>
+        <ul>
+          <li *ngFor="let question of section.questions">{{question.id}}</li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li *ngFor="let question of section.questions">{{question.weight}}</li>
+        </ul>
+      </td>
+      <td><button (click)="toggleExpand(section.name)">Toggle</button></td>
+    </tr>
+    <tr *ngIf="expandedSection === section.name">
+      <td colspan="7">
+        <app-supplier-component [member]="member" [category]="category" [section]="section"></app-supplier-component>
+      </td>
+    </tr>
+  </ng-container>
+</ng-container>

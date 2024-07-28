@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 
 import { AppComponent } from './app.component';
@@ -10,6 +11,12 @@ import { SupplierComponentComponent } from './supplier-component/supplier-compon
 import { SupplierDetailsComponent } from './supplier-details/supplier-details.component';
 
 
+const routes: Routes = [
+  { path: 'score', component: MemberTableComponent },
+  { path: '', redirectTo: '/score', pathMatch: 'full' },
+
+];
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,9 +25,11 @@ import { SupplierDetailsComponent } from './supplier-details/supplier-details.co
     PopupComponent,
     SupplierComponentComponent,
     SupplierDetailsComponent
+
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: [AppComponent]
