@@ -149,3 +149,160 @@ ul {
     margin: 0;
     padding-left: 20px;
 }
+
+.responses-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.response-sections {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.committee-responses,
+.nominee-responses,
+.shortlist-committee-responses,
+.shortlist-nominee-responses,
+.preaward-committee-responses,
+.preaward-nominee-responses {
+    flex: 1 1 300px;
+    margin: 10px;
+}
+
+.company-accordion {
+    margin-bottom: 10px;
+}
+
+.company-accordion summary {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #3b9b38;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+
+
+.response-card {
+    padding: 15px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #bef3be;
+}
+
+.response-details {
+    text-align: left;
+    margin-top: 10px;
+}
+
+.response-card p {
+    margin: 5px 0;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.response-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    /* Adds some space between the header and the details */
+}
+
+.response-name-date {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    /* Ensures left alignment */
+}
+
+
+.response-score-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    /* Aligns score and status to the right */
+    margin-left: auto;
+}
+
+.response-score-container .score-text {
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    /* Adds some space between score and status */
+}
+
+.response-score {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    /* Align score and status items to the right */
+}
+
+
+.response-score span {
+    font-weight: bold;
+}
+
+.shortlisted-blob {
+    background-color: green;
+}
+
+.not-shortlisted-blob {
+    background-color: red;
+}
+
+.response-date {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #666;
+    font-size: xx-small;
+}
+
+.response-details p {
+    margin: 5px 0;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+
+.shortlisted {
+    border: 5px solid darkgreen;
+    /* Dark green stroke for shortlisted */
+}
+
+.not-shortlisted {
+    border: 5px solid darkred;
+    /* Dark red stroke for not shortlisted */
+}
+
+.response-card h4 {
+    margin-top: 0;
+    color: #333;
+}
+
+.response-card p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.status-blob {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: bold;
+}
+
+.shortlisted-blob {
+    font-size: 12px;
+    background-color: #4CAF50;
+    color: white;
+}
+
+.not-shortlisted-blob {
+    font-size: 12px;
+    background-color: #F44336;
+    color: white;
+}

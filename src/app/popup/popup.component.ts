@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-popup',
@@ -30,10 +30,15 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
           <div class="accordion-item">
             <h2 class="accordion-header" (click)="toggleAccordion('responses')">
               Responses
+              <select (change)="onResponseFilterChange($event)" class="green-select">
+                <option value="all-shortlist">All-Shortlist</option>
+                <option value="all-preaward">All-PreAward</option>
+                <option value="all-shortlist-preaward">All Shortlist & Pre-Award</option>
+              </select>
               <span class="collapse-arrow" [class.collapsed]="activeAccordion !== 'responses'">▼</span>
             </h2>
             <div class="accordion-content" [class.active]="activeAccordion === 'responses'">
-              <p>{{ committees[activeCommittee] }} results</p>
+              <!--<p>{{ committees[activeCommittee] }} results</p>>-->
               <ng-content select="[responses]"></ng-content>
             </div>
           </div>
@@ -141,16 +146,46 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
     .export-icon:hover {
       color: #45a049;
     }
+
+    .green-select {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    .response-card {
+      background-color: #bef3be;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 15px;
+      margin-top: 10px;
+    }
+
+    .response-card.not-shortlisted {
+      border: 2px solid red;
+    }
+
+    .response-card.shortlisted {
+      border: 2px solid darkgreen;
+    }
   `]
 })
-export class PopupComponent {
+export class PopupComponent implements OnInit {
   @Input() isOpen: boolean = false;
   @Input() committees: string[] = [];
   @Output() close: EventEmitter<void> = new EventEmitter<void>();
   @Output() committeeChange: EventEmitter<number> = new EventEmitter<number>();
+  @Output() responseFilterChange: EventEmitter<string> = new EventEmitter<string>();
 
   activeCommittee: number = 0;
   activeAccordion: string | null = null;
+
+  ngOnInit() {
+    // Emit the default filter on component initialization
+    this.responseFilterChange.emit('all-shortlist');
+  }
 
   setActiveCommittee(index: number) {
     this.activeCommittee = index;
@@ -164,5 +199,10 @@ export class PopupComponent {
   exportScoreSheet() {
     // Implement export functionality here
     console.log('Exporting score sheet...');
+  }
+
+  onResponseFilterChange(event: Event) {
+    const filter = (event.target as HTMLSelectElement).value;
+    this.responseFilterChange.emit(filter);
   }
 }
