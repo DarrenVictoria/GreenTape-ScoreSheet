@@ -12,7 +12,7 @@
           <th>Section Weight</th>
           <th>Questions</th>
           <th>Question Weight</th>
-          <ng-container *ngFor="let supplier of members[0]?.suppliers">
+          <ng-container *ngFor="let supplier of activeCommittee.members[0]?.suppliers">
             <th class="toggle-column">
               <div class="toggle-bar" [class.expanded]="isSupplierExpanded(supplier.name)">
               </div>
@@ -27,13 +27,12 @@
         </tr>
       </thead>
       <tbody #tableBody>
-        <ng-container *ngFor="let member of members; trackBy: trackByMember">
+        <ng-container *ngFor="let member of activeCommittee.members; trackBy: trackByMember">
           <ng-container *ngFor="let category of member.categories; let categoryIndex = index; trackBy: trackByCategory">
             <ng-container *ngFor="let section of category.sections; let sectionIndex = index; trackBy: trackBySection">
               <tr class="section-row">
                 <td *ngIf="categoryIndex === 0 && sectionIndex === 0" [attr.rowspan]="getTotalRows(member)">{{
-                  member.name
-                  }}</td>
+                  member.name }}</td>
                 <td *ngIf="sectionIndex === 0" [attr.rowspan]="category.sections.length">{{ category.name }}</td>
                 <td>{{ section.name }}</td>
                 <td>{{ section.sectionWeight }}%</td>
@@ -91,6 +90,7 @@
     <div class="responses-container">
       <ng-container *ngIf="responseFilter !== 'all-shortlist-preaward'">
         <div class="response-sections">
+          <!-- Committee Responses -->
           <div class="committee-responses">
             <h3>Committee Responses</h3>
             <div *ngFor="let company of selectedData" class="company-accordion">
@@ -119,6 +119,8 @@
               </details>
             </div>
           </div>
+
+          <!-- Nominee Responses -->
           <div class="nominee-responses">
             <h3>Nominee Responses</h3>
             <div *ngFor="let company of selectedData" class="company-accordion">
@@ -152,6 +154,7 @@
 
       <ng-container *ngIf="responseFilter === 'all-shortlist-preaward'">
         <div class="response-sections">
+          <!-- Shortlist Committee Responses -->
           <div class="shortlist-committee-responses">
             <h3>Shortlist Committee Responses</h3>
             <div *ngFor="let company of selectedData" class="company-accordion">
@@ -181,6 +184,8 @@
               </details>
             </div>
           </div>
+
+          <!-- Shortlist Nominee Responses -->
           <div class="shortlist-nominee-responses">
             <h3>Shortlist Nominee Responses</h3>
             <div *ngFor="let company of selectedData" class="company-accordion">
@@ -210,6 +215,8 @@
               </details>
             </div>
           </div>
+
+          <!-- Pre-Award Committee Responses -->
           <div class="preaward-committee-responses">
             <h3>Pre-Award Committee Responses</h3>
             <div *ngFor="let company of selectedData" class="company-accordion">
@@ -239,6 +246,8 @@
               </details>
             </div>
           </div>
+
+          <!-- Pre-Award Nominee Responses -->
           <div class="preaward-nominee-responses">
             <h3>Pre-Award Nominee Responses</h3>
             <div *ngFor="let company of selectedData" class="company-accordion">
@@ -272,6 +281,5 @@
       </ng-container>
     </div>
   </ng-container>
-
 
 </app-popup>

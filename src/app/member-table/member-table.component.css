@@ -173,7 +173,10 @@ ul {
 
 .company-accordion {
     margin-bottom: 10px;
+    width: 100%;
 }
+
+
 
 .company-accordion summary {
     cursor: pointer;

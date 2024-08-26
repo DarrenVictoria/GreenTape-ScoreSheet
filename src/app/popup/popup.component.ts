@@ -1,5 +1,15 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
+interface Committee {
+  name: string;
+  members: any[]; // You can replace 'any' with a more specific type if needed
+  responses: {
+    shortlist: any[];
+    preaward: any[];
+    allShortlistPreaward: any[];
+  };
+}
+
 @Component({
   selector: 'app-popup',
   template: `
@@ -8,9 +18,9 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
         <button class="close-btn" (click)="close.emit()">×</button>
         <div class="tabs">
           <button *ngFor="let committee of committees; let i = index"
-                  [class.active]="activeCommittee === i"
+                  [class.active]="activeCommitteeIndex === i"
                   (click)="setActiveCommittee(i)">
-            {{ committee }}
+            {{ committee.name }}
           </button>
         </div>
         <div class="accordion">
@@ -174,21 +184,20 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 })
 export class PopupComponent implements OnInit {
   @Input() isOpen: boolean = false;
-  @Input() committees: string[] = [];
+  @Input() committees: Committee[] = [];
   @Output() close: EventEmitter<void> = new EventEmitter<void>();
   @Output() committeeChange: EventEmitter<number> = new EventEmitter<number>();
   @Output() responseFilterChange: EventEmitter<string> = new EventEmitter<string>();
 
-  activeCommittee: number = 0;
+  activeCommitteeIndex: number = 0;
   activeAccordion: string | null = null;
 
   ngOnInit() {
-    // Emit the default filter on component initialization
     this.responseFilterChange.emit('all-shortlist');
   }
 
   setActiveCommittee(index: number) {
-    this.activeCommittee = index;
+    this.activeCommitteeIndex = index;
     this.committeeChange.emit(index);
   }
 
@@ -197,7 +206,6 @@ export class PopupComponent implements OnInit {
   }
 
   exportScoreSheet() {
-    // Implement export functionality here
     console.log('Exporting score sheet...');
   }
 
