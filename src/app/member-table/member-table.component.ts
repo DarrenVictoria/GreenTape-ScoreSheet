@@ -18,6 +18,8 @@ export class MemberTableComponent implements OnInit, AfterViewInit {
   responseFilter: string = 'all-shortlist';
   selectedData: Company[] = [];
   expandedSuppliers: { [key: string]: boolean } = {};
+  expandedCompanies: { [key: string]: boolean } = {};
+  expandedCards: { [key: string]: { [key: string]: { [key: string]: boolean } } } = {};
 
   constructor(
     private router: Router,
@@ -55,12 +57,40 @@ export class MemberTableComponent implements OnInit, AfterViewInit {
     );
   }
 
+  getResponses(company: Company, type: string): any[] {
+    switch (type) {
+      case 'committee':
+        return company.members.committeeResponses || [];
+      case 'nominee':
+        return company.members.nomineeResponses || [];
+      case 'shortlistCommittee':
+        return company.members.shortlistCommitteeResponses || [];
+      case 'shortlistNominee':
+        return company.members.shortlistNomineeResponses || [];
+      case 'preawardCommittee':
+        return company.members.preawardCommitteeResponses || [];
+      case 'preawardNominee':
+        return company.members.preawardNomineeResponses || [];
+      default:
+        return [];
+    }
+  }
+
   openPopup() {
     this.isPopupOpen = true;
   }
 
   closePopup() {
     this.isPopupOpen = false;
+  }
+
+  toggleCompanyAccordions(companyName: string, event: Event) {
+    event.preventDefault(); // Prevent default behavior of details element
+    this.expandedCompanies[companyName] = !this.expandedCompanies[companyName];
+  }
+
+  isCompanyExpanded(companyName: string): boolean {
+    return this.expandedCompanies[companyName] || false;
   }
 
   onCommitteeChange(index: number) {
@@ -72,6 +102,28 @@ export class MemberTableComponent implements OnInit, AfterViewInit {
   onResponseFilterChange(filter: string) {
     this.responseFilter = filter;
     this.updateSelectedData();
+  }
+
+  isCardExpanded(companyName: string, type: string, index: string): boolean {
+    if (this.expandedCards[companyName] &&
+      this.expandedCards[companyName][type] &&
+      this.expandedCards[companyName][type][index]) {
+      return this.expandedCards[companyName][type][index];
+    }
+    return false;
+  }
+
+  toggleCard(companyName: string, type: string, index: string): void {
+    if (!this.expandedCards[companyName]) {
+      this.expandedCards[companyName] = {};
+    }
+    if (!this.expandedCards[companyName][type]) {
+      this.expandedCards[companyName][type] = {};
+    }
+    if (!this.expandedCards[companyName][type][index]) {
+      this.expandedCards[companyName][type][index] = false;
+    }
+    this.expandedCards[companyName][type][index] = !this.expandedCards[companyName][type][index];
   }
 
   updateSelectedData() {

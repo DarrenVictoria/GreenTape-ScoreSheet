@@ -27,7 +27,7 @@ interface Committee {
           <div class="accordion-item">
             <h2 class="accordion-header" (click)="toggleAccordion('scoresheet')">
               Score Sheet
-              <span class="collapse-arrow" [class.collapsed]="activeAccordion !== 'scoresheet'">▼</span>
+              <span class="collapse-arrow" [class.collapsed]="activeAccordion !== 'scoresheet'"><i class="fa-solid fa-chevron-down"></i></span>
             </h2>
             <div class="accordion-content" [class.active]="activeAccordion === 'scoresheet'">
               <div class="score-info">
@@ -45,7 +45,7 @@ interface Committee {
                 <option value="all-preaward">All-PreAward</option>
                 <option value="all-shortlist-preaward">All Shortlist & Pre-Award</option>
               </select>
-              <span class="collapse-arrow" [class.collapsed]="activeAccordion !== 'responses'">▼</span>
+              <span class="collapse-arrow" [class.collapsed]="activeAccordion !== 'responses'"><i class="fa-solid fa-chevron-down"></i></span>
             </h2>
             <div class="accordion-content" [class.active]="activeAccordion === 'responses'">
               <!--<p>{{ committees[activeCommittee] }} results</p>>-->
@@ -103,14 +103,14 @@ interface Committee {
       border-top-right-radius: 5px;
     }
     .tabs button.active {
-      background-color: #4CAF50;
+      background-color: #4c7a96;
       color: white;
     }
     .accordion-item {
       margin-bottom: 10px;
     }
     .accordion-header {
-      background-color: #1c5912;
+      background-color: #0c5d83;
       color:#ffffff;
       padding: 10px;
       cursor: pointer;
@@ -150,7 +150,7 @@ interface Committee {
     .export-icon {
       cursor: pointer;
       font-size: 1.2em;
-      color: #4CAF50;
+      color: #2e86c1;
     }
 
     .export-icon:hover {
@@ -158,7 +158,7 @@ interface Committee {
     }
 
     .green-select {
-      background-color: #4CAF50;
+      background-color: #2e86c1;
       color: white;
       border: none;
       padding: 5px 10px;

@@ -4,7 +4,7 @@
 html,
 body {
     height: 100%;
-    font-family: 'Raleway', sans-serif;
+    font-family: Verdana, Tahoma, sans-serif;
     color: '#095540';
     scroll-behavior: smooth;
 }

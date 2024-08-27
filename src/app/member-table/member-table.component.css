@@ -4,6 +4,8 @@
     margin-top: 40px;
 }
 
+
+
 .main-table th,
 .main-table td {
     border: 1px solid #ddd;
@@ -78,7 +80,7 @@
 .toggle-bar {
     width: 100%;
     height: 100%;
-    background-color: #4CAF50;
+    background-color: #2e86c1;
     transition: background-color 0.3s;
     display: flex;
     flex-direction: column;
@@ -87,7 +89,7 @@
 }
 
 .toggle-bar.expanded {
-    background-color: #45a049;
+    background-color: #2e86c1;
 }
 
 .supplier-name {
@@ -111,14 +113,13 @@
     font-size: 11px;
     margin-bottom: 1rem;
     color: white;
-
 }
 
 .info-button,
 .toggle-button {
     background-color: white;
     border: none;
-    color: #4CAF50;
+    color: #2e86c1;
     width: 24px;
     height: 24px;
     border-radius: 50%;
@@ -137,7 +138,7 @@
 }
 
 .expanded .toggle-button {
-    background-color: #4CAF50;
+    background-color: #2e86c1;
     color: white;
 }
 
@@ -153,6 +154,17 @@ ul {
 .responses-container {
     display: flex;
     flex-wrap: wrap;
+}
+
+.response-category {
+    font-size: medium;
+}
+
+.company-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    width: 100%;
 }
 
 .response-sections {
@@ -176,24 +188,42 @@ ul {
     width: 100%;
 }
 
-
-
 .company-accordion summary {
+    color: white;
     cursor: pointer;
     padding: 10px;
-    background-color: #3b9b38;
+    background-color: #2e86c1;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
-
-
 
 .response-card {
     padding: 15px;
     margin-top: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    background-color: #bef3be;
+    background-color: #caebf6;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.response-card:hover {
+    background-color: #b3e0f2;
+}
+
+.response-card.expanded {
+    background-color: #a1d6e2;
+}
+
+.response-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.response-card.expanded .response-details {
+    max-height: 500px;
+    /* Adjust this value as needed */
 }
 
 .response-details {
@@ -222,7 +252,6 @@ ul {
     /* Ensures left alignment */
 }
 
-
 .response-score-container {
     display: flex;
     flex-direction: column;
@@ -232,7 +261,7 @@ ul {
 }
 
 .response-score-container .score-text {
-    font-size: 17px;
+    font-size: 0.78rem;
     font-weight: bold;
     margin-bottom: 5px;
     /* Adds some space between score and status */
@@ -244,7 +273,6 @@ ul {
     align-items: flex-end;
     /* Align score and status items to the right */
 }
-
 
 .response-score span {
     font-weight: bold;
@@ -271,14 +299,13 @@ ul {
     color: #666;
 }
 
-
 .shortlisted {
-    border: 5px solid darkgreen;
+    border: 2px solid darkgreen;
     /* Dark green stroke for shortlisted */
 }
 
 .not-shortlisted {
-    border: 5px solid darkred;
+    border: 2px solid darkred;
     /* Dark red stroke for not shortlisted */
 }
 
@@ -289,7 +316,7 @@ ul {
 
 .response-card p {
     margin: 5px 0;
-    color: #666;
+    color: #000000;
 }
 
 .status-blob {
@@ -308,4 +335,20 @@ ul {
     font-size: 12px;
     background-color: #F44336;
     color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .response-section {
+        flex: 1 1 100%;
+    }
+
+    .response-header {
+        flex-direction: column;
+    }
+
+    .response-score-container {
+        align-items: flex-start;
+        margin-top: 10px;
+    }
 }

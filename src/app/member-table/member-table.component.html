@@ -88,197 +88,173 @@
 
   <ng-container responses>
     <div class="responses-container">
-      <ng-container *ngIf="responseFilter !== 'all-shortlist-preaward'">
-        <div class="response-sections">
-          <!-- Committee Responses -->
-          <div class="committee-responses">
-            <h3>Committee Responses</h3>
-            <div *ngFor="let company of selectedData" class="company-accordion">
-              <details>
-                <summary>{{ company.name }}</summary>
-                <div *ngFor="let committeeResponse of company.members.committeeResponses" class="response-card"
-                  [ngClass]="{'shortlisted': committeeResponse.shortlisted, 'not-shortlisted': !committeeResponse.shortlisted}">
-                  <div class="response-header">
-                    <div class="response-name-date">
-                      <h4>{{ committeeResponse.name }}</h4>
-                      <p class="response-date">{{ committeeResponse.datetime }}</p>
+      <div class="company-list">
+        <div *ngFor="let company of selectedData" class="company-item">
+          <div class="company-accordion">
+            <details [attr.open]="isCompanyExpanded(company.name) ? '' : null">
+              <summary (click)="toggleCompanyAccordions(company.name, $event)">
+                {{ company.name }}
+              </summary>
+              <div class="accordion-content">
+                <div class="response-sections">
+                  <ng-container *ngIf="responseFilter !== 'all-shortlist-preaward'">
+                    <div class="response-section committee-responses">
+                      <h3 class="response-category">Committee Responses</h3>
+                      <div *ngFor="let response of getResponses(company, 'committee')" class="response-card"
+                        [ngClass]="{'shortlisted': response.shortlisted, 'not-shortlisted': !response.shortlisted, 'expanded': isCardExpanded(company.name, 'committee', response.name)}"
+                        (click)="toggleCard(company.name, 'committee', response.name)">
+                        <div class="response-header">
+                          <div class="response-name-date">
+                            <h4>{{ response.name }}</h4>
+                            <p class="response-date">{{ response.datetime }}</p>
+                          </div>
+                          <div class="response-score-container">
+                            <span class="score-text">Score: {{ response.score | number:'1.2-2' }}%</span>
+                            <span class="status-blob"
+                              [ngClass]="response.shortlisted ? 'shortlisted-blob' : 'not-shortlisted-blob'">
+                              {{ response.shortlisted ? 'Shortlisted' : 'Not Shortlisted' }}
+                            </span>
+                          </div>
+                        </div>
+                        <div class="response-details" *ngIf="isCardExpanded(company.name, 'committee', response.name)">
+                          <p>{{ response.committeeText }}</p>
+                          <p>{{ response.comment }}</p>
+                        </div>
+                      </div>
                     </div>
-                    <div class="response-score-container">
-                      <span class="score-text">Score: {{ committeeResponse.score }}</span>
-                      <span class="status-blob"
-                        [ngClass]="committeeResponse.shortlisted ? 'shortlisted-blob' : 'not-shortlisted-blob'">
-                        {{ committeeResponse.shortlisted ? 'Shortlisted' : 'Not Shortlisted' }}
-                      </span>
+                    <div class="response-section nominee-responses">
+                      <h3 class="response-category">Nominee Responses</h3>
+                      <div *ngFor="let response of getResponses(company, 'nominee')" class="response-card"
+                        [ngClass]="{'shortlisted': response.shortlisted, 'not-shortlisted': !response.shortlisted, 'expanded': isCardExpanded(company.name, 'nominee', response.name)}"
+                        (click)="toggleCard(company.name, 'nominee', response.name)">
+                        <div class="response-header">
+                          <div class="response-name-date">
+                            <h4>{{ response.name }}</h4>
+                            <p class="response-date">{{ response.datetime }}</p>
+                          </div>
+                          <div class="response-score-container">
+                            <span class="score-text">Avg Score: {{ response.score | number:'1.2-2'}}%</span>
+                            <span class="status-blob"
+                              [ngClass]="response.shortlisted ? 'shortlisted-blob' : 'not-shortlisted-blob'">
+                              {{ response.shortlisted ? 'Shortlisted' : 'Not Shortlisted' }}
+                            </span>
+                          </div>
+                        </div>
+                        <div class="response-details" *ngIf="isCardExpanded(company.name, 'nominee', response.name)">
+                          <p>{{ response.committeeText }}</p>
+                          <p>{{ response.comment }}</p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="response-details">
-                    <p style="margin-bottom: 1rem;">{{ committeeResponse.committeeText }}</p>
-                    <p>{{ committeeResponse.comment }}</p>
-                  </div>
+                  </ng-container>
+                  <ng-container *ngIf="responseFilter === 'all-shortlist-preaward'">
+                    <div class="response-section shortlist-committee-responses">
+                      <h3 class="response-category">Shortlist Committee Responses</h3>
+                      <div *ngFor="let response of getResponses(company, 'shortlistCommittee')" class="response-card"
+                        [ngClass]="{'shortlisted': response.shortlisted, 'not-shortlisted': !response.shortlisted, 'expanded': isCardExpanded(company.name, 'shortlistCommittee', response.name)}"
+                        (click)="toggleCard(company.name, 'shortlistCommittee', response.name)">
+                        <div class="response-header">
+                          <div class="response-name-date">
+                            <h4>{{ response.name }}</h4>
+                            <p class="response-date">{{ response.datetime }}</p>
+                          </div>
+                          <div class="response-score-container">
+                            <span class="score-text">Score: {{ response.score | number:'1.2-2' }}%</span>
+                            <span class="status-blob"
+                              [ngClass]="response.shortlisted ? 'shortlisted-blob' : 'not-shortlisted-blob'">
+                              {{ response.shortlisted ? 'Shortlisted' : 'Not Shortlisted' }}
+                            </span>
+                          </div>
+                        </div>
+                        <div class="response-details"
+                          *ngIf="isCardExpanded(company.name, 'shortlistCommittee', response.name)">
+                          <p>{{ response.committeeText }}</p>
+                          <p>{{ response.comment }}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="response-section shortlist-nominee-responses">
+                      <h3 class="response-category">Shortlist Nominee Responses</h3>
+                      <div *ngFor="let response of getResponses(company, 'shortlistNominee')" class="response-card"
+                        [ngClass]="{'shortlisted': response.shortlisted, 'not-shortlisted': !response.shortlisted, 'expanded': isCardExpanded(company.name, 'shortlistNominee', response.name)}"
+                        (click)="toggleCard(company.name, 'shortlistNominee', response.name)">
+                        <div class="response-header">
+                          <div class="response-name-date">
+                            <h4>{{ response.name }}</h4>
+                            <p class="response-date">{{ response.datetime }}</p>
+                          </div>
+                          <div class="response-score-container">
+                            <span class="score-text">Avg Score: {{ response.score | number:'1.2-2'}}%</span>
+                            <span class="status-blob"
+                              [ngClass]="response.shortlisted ? 'shortlisted-blob' : 'not-shortlisted-blob'">
+                              {{ response.shortlisted ? 'Shortlisted' : 'Not Shortlisted' }}
+                            </span>
+                          </div>
+                        </div>
+                        <div class="response-details"
+                          *ngIf="isCardExpanded(company.name, 'shortlistNominee', response.name)">
+                          <p>{{ response.committeeText }}</p>
+                          <p>{{ response.comment }}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="response-section preaward-committee-responses">
+                      <h3 class="response-category">Preaward Committee Responses</h3>
+                      <div *ngFor="let response of getResponses(company, 'preawardCommittee')" class="response-card"
+                        [ngClass]="{'shortlisted': response.shortlisted, 'not-shortlisted': !response.shortlisted, 'expanded': isCardExpanded(company.name, 'preawardCommittee', response.name)}"
+                        (click)="toggleCard(company.name, 'preawardCommittee', response.name)">
+                        <div class="response-header">
+                          <div class="response-name-date">
+                            <h4>{{ response.name }}</h4>
+                            <p class="response-date">{{ response.datetime }}</p>
+                          </div>
+                          <div class="response-score-container">
+                            <span class="score-text">Score: {{ response.score | number:'1.2-2' }}%</span>
+                            <span class="status-blob"
+                              [ngClass]="response.shortlisted ? 'shortlisted-blob' : 'not-shortlisted-blob'">
+                              {{ response.shortlisted ? 'Shortlisted' : 'Not Shortlisted' }}
+                            </span>
+                          </div>
+                        </div>
+                        <div class="response-details"
+                          *ngIf="isCardExpanded(company.name, 'preawardCommittee', response.name)">
+                          <p>{{ response.committeeText }}</p>
+                          <p>{{ response.comment }}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="response-section preaward-nominee-responses">
+                      <h3 class="response-category">Preaward Nominee Responses</h3>
+                      <div *ngFor="let response of getResponses(company, 'preawardNominee')" class="response-card"
+                        [ngClass]="{'shortlisted': response.shortlisted, 'not-shortlisted': !response.shortlisted, 'expanded': isCardExpanded(company.name, 'preawardNominee', response.name)}"
+                        (click)="toggleCard(company.name, 'preawardNominee', response.name)">
+                        <div class="response-header">
+                          <div class="response-name-date">
+                            <h4>{{ response.name }}</h4>
+                            <p class="response-date">{{ response.datetime }}</p>
+                          </div>
+                          <div class="response-score-container">
+                            <span class="score-text">Avg Score: {{ response.score | number:'1.2-2'}}%</span>
+                            <span class="status-blob"
+                              [ngClass]="response.shortlisted ? 'shortlisted-blob' : 'not-shortlisted-blob'">
+                              {{ response.shortlisted ? 'Shortlisted' : 'Not Shortlisted' }}
+                            </span>
+                          </div>
+                        </div>
+                        <div class="response-details"
+                          *ngIf="isCardExpanded(company.name, 'preawardNominee', response.name)">
+                          <p>{{ response.committeeText }}</p>
+                          <p>{{ response.comment }}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
                 </div>
-              </details>
-            </div>
-          </div>
-
-          <!-- Nominee Responses -->
-          <div class="nominee-responses">
-            <h3>Nominee Responses</h3>
-            <div *ngFor="let company of selectedData" class="company-accordion">
-              <details>
-                <summary>{{ company.name }}</summary>
-                <div *ngFor="let nomineeResponse of company.members.nomineeResponses" class="response-card"
-                  [ngClass]="{'shortlisted': nomineeResponse.shortlisted, 'not-shortlisted': !nomineeResponse.shortlisted}">
-                  <div class="response-header">
-                    <div class="response-name-date">
-                      <h4>{{ nomineeResponse.name }}</h4>
-                      <p class="response-date">{{ nomineeResponse.datetime }}</p>
-                    </div>
-                    <div class="response-score-container">
-                      <span class="score-text">Score: {{ nomineeResponse.score }}</span>
-                      <span class="status-blob"
-                        [ngClass]="nomineeResponse.shortlisted ? 'shortlisted-blob' : 'not-shortlisted-blob'">
-                        {{ nomineeResponse.shortlisted ? 'Shortlisted' : 'Not Shortlisted' }}
-                      </span>
-                    </div>
-                  </div>
-                  <div class="response-details">
-                    <p style="margin-bottom: 1rem;">{{ nomineeResponse.committeeText }}</p>
-                    <p>{{ nomineeResponse.comment }}</p>
-                  </div>
-                </div>
-              </details>
-            </div>
-          </div>
-        </div>
-      </ng-container>
-
-      <ng-container *ngIf="responseFilter === 'all-shortlist-preaward'">
-        <div class="response-sections">
-          <!-- Shortlist Committee Responses -->
-          <div class="shortlist-committee-responses">
-            <h3>Shortlist Committee Responses</h3>
-            <div *ngFor="let company of selectedData" class="company-accordion">
-              <details>
-                <summary>{{ company.name }}</summary>
-                <div *ngFor="let shortlistCommitteeResponse of company.members.shortlistCommitteeResponses"
-                  class="response-card"
-                  [ngClass]="{'shortlisted': shortlistCommitteeResponse.shortlisted, 'not-shortlisted': !shortlistCommitteeResponse.shortlisted}">
-                  <div class="response-header">
-                    <div class="response-name-date">
-                      <h4>{{ shortlistCommitteeResponse.name }}</h4>
-                      <p class="response-date">{{ shortlistCommitteeResponse.datetime }}</p>
-                    </div>
-                    <div class="response-score-container">
-                      <span class="score-text">Score: {{ shortlistCommitteeResponse.score }}</span>
-                      <span class="status-blob"
-                        [ngClass]="shortlistCommitteeResponse.shortlisted ? 'shortlisted-blob' : 'not-shortlisted-blob'">
-                        {{ shortlistCommitteeResponse.shortlisted ? 'Shortlisted' : 'Not Shortlisted' }}
-                      </span>
-                    </div>
-                  </div>
-                  <div class="response-details">
-                    <p style="margin-bottom: 1rem;">{{ shortlistCommitteeResponse.committeeText }}</p>
-                    <p>{{ shortlistCommitteeResponse.comment }}</p>
-                  </div>
-                </div>
-              </details>
-            </div>
-          </div>
-
-          <!-- Shortlist Nominee Responses -->
-          <div class="shortlist-nominee-responses">
-            <h3>Shortlist Nominee Responses</h3>
-            <div *ngFor="let company of selectedData" class="company-accordion">
-              <details>
-                <summary>{{ company.name }}</summary>
-                <div *ngFor="let shortlistNomineeResponse of company.members.shortlistNomineeResponses"
-                  class="response-card"
-                  [ngClass]="{'shortlisted': shortlistNomineeResponse.shortlisted, 'not-shortlisted': !shortlistNomineeResponse.shortlisted}">
-                  <div class="response-header">
-                    <div class="response-name-date">
-                      <h4>{{ shortlistNomineeResponse.name }}</h4>
-                      <p class="response-date">{{ shortlistNomineeResponse.datetime }}</p>
-                    </div>
-                    <div class="response-score-container">
-                      <span class="score-text">Score: {{ shortlistNomineeResponse.score }}</span>
-                      <span class="status-blob"
-                        [ngClass]="shortlistNomineeResponse.shortlisted ? 'shortlisted-blob' : 'not-shortlisted-blob'">
-                        {{ shortlistNomineeResponse.shortlisted ? 'Shortlisted' : 'Not Shortlisted' }}
-                      </span>
-                    </div>
-                  </div>
-                  <div class="response-details">
-                    <p style="margin-bottom: 1rem;">{{ shortlistNomineeResponse.committeeText }}</p>
-                    <p>{{ shortlistNomineeResponse.comment }}</p>
-                  </div>
-                </div>
-              </details>
-            </div>
-          </div>
-
-          <!-- Pre-Award Committee Responses -->
-          <div class="preaward-committee-responses">
-            <h3>Pre-Award Committee Responses</h3>
-            <div *ngFor="let company of selectedData" class="company-accordion">
-              <details>
-                <summary>{{ company.name }}</summary>
-                <div *ngFor="let preawardCommitteeResponse of company.members.preawardCommitteeResponses"
-                  class="response-card"
-                  [ngClass]="{'shortlisted': preawardCommitteeResponse.shortlisted, 'not-shortlisted': !preawardCommitteeResponse.shortlisted}">
-                  <div class="response-header">
-                    <div class="response-name-date">
-                      <h4>{{ preawardCommitteeResponse.name }}</h4>
-                      <p class="response-date">{{ preawardCommitteeResponse.datetime }}</p>
-                    </div>
-                    <div class="response-score-container">
-                      <span class="score-text">Score: {{ preawardCommitteeResponse.score }}</span>
-                      <span class="status-blob"
-                        [ngClass]="preawardCommitteeResponse.shortlisted ? 'shortlisted-blob' : 'not-shortlisted-blob'">
-                        {{ preawardCommitteeResponse.shortlisted ? 'Shortlisted' : 'Not Shortlisted' }}
-                      </span>
-                    </div>
-                  </div>
-                  <div class="response-details">
-                    <p style="margin-bottom: 1rem;">{{ preawardCommitteeResponse.committeeText }}</p>
-                    <p>{{ preawardCommitteeResponse.comment }}</p>
-                  </div>
-                </div>
-              </details>
-            </div>
-          </div>
-
-          <!-- Pre-Award Nominee Responses -->
-          <div class="preaward-nominee-responses">
-            <h3>Pre-Award Nominee Responses</h3>
-            <div *ngFor="let company of selectedData" class="company-accordion">
-              <details>
-                <summary>{{ company.name }}</summary>
-                <div *ngFor="let preawardNomineeResponse of company.members.preawardNomineeResponses"
-                  class="response-card"
-                  [ngClass]="{'shortlisted': preawardNomineeResponse.shortlisted, 'not-shortlisted': !preawardNomineeResponse.shortlisted}">
-                  <div class="response-header">
-                    <div class="response-name-date">
-                      <h4>{{ preawardNomineeResponse.name }}</h4>
-                      <p class="response-date">{{ preawardNomineeResponse.datetime }}</p>
-                    </div>
-                    <div class="response-score-container">
-                      <span class="score-text">Score: {{ preawardNomineeResponse.score }}</span>
-                      <span class="status-blob"
-                        [ngClass]="preawardNomineeResponse.shortlisted ? 'shortlisted-blob' : 'not-shortlisted-blob'">
-                        {{ preawardNomineeResponse.shortlisted ? 'Shortlisted' : 'Not Shortlisted' }}
-                      </span>
-                    </div>
-                  </div>
-                  <div class="response-details">
-                    <p style="margin-bottom: 1rem;">{{ preawardNomineeResponse.committeeText }}</p>
-                    <p>{{ preawardNomineeResponse.comment }}</p>
-                  </div>
-                </div>
-              </details>
-            </div>
+              </div>
+            </details>
           </div>
         </div>
-      </ng-container>
+      </div>
     </div>
   </ng-container>
 

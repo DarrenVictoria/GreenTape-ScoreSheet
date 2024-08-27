@@ -601,7 +601,77 @@ export class InMemoryDbService {
                 }
               ]
             }
-          }
+          },
+          {
+            name: "James pvt ltd",
+            members: {
+              committeeResponses: [
+                {
+                  name: "Tharika",
+                  datetime: "23/08/2024 01:39:34 PM",
+                  shortlisted: true,
+                  committeeText: "Shortlist committee one",
+                  comment: '"IT" redirects here. For the customer service colloquially referred to as IT, see Tech support. For other uses, see It (disambiguation).\n\n"Infotech" redirects here. For the Indian company, see Cyient.\n\nFor the Hong Kong constituency, see Information Technology (constituency).',
+                  score: 85 // Add score
+                },
+                {
+                  name: "John",
+                  datetime: "23/08/2024 01:39:34 PM",
+                  shortlisted: true,
+                  committeeText: "Shortlist committee one",
+                  comment: '"IT" redirects here. For the customer service colloquially referred to as IT, see Tech support. For other uses, see It (disambiguation).\n\n"Infotech" redirects here. For the Indian company, see Cyient.\n\nFor the Hong Kong constituency, see Information Technology (constituency).',
+                  score: 45 // Add score
+                }
+              ],
+              nomineeResponses: [
+                {
+                  name: "Dilruwan",
+                  datetime: "23/08/2024 01:45:40 PM",
+                  shortlisted: false,
+                  committeeText: "Shortlist Nominee",
+                  comment: '"IT" redirects here. For the customer service colloquially referred to as IT, see Tech support. For other uses, see It (disambiguation).\n\n"Infotech" redirects here. For the Indian company, see Cyient.\n\nFor the Hong Kong constituency, see Information Technology (constituency).',
+                  score: 70 // Add score
+                }
+              ]
+            }
+          },
+          {
+            name: "WaterFront pvt ltd",
+            members: {
+              committeeResponses: [
+                {
+                  name: "Tharika",
+                  datetime: "23/08/2024 01:39:34 PM",
+                  shortlisted: true,
+                  committeeText: "Shortlist committee one",
+                  comment: '"IT" redirects here. For the customer service colloquially referred to as IT, see Tech support. For other uses, see It (disambiguation).\n\n"Infotech" redirects here. For the Indian company, see Cyient.\n\nFor the Hong Kong constituency, see Information Technology (constituency).',
+                  score: 85 // Add score
+                },
+                {
+                  name: "John",
+                  datetime: "23/08/2024 01:39:34 PM",
+                  shortlisted: true,
+                  committeeText: "Shortlist committee one",
+                  comment: '"IT" redirects here. For the customer service colloquially referred to as IT, see Tech support. For other uses, see It (disambiguation).\n\n"Infotech" redirects here. For the Indian company, see Cyient.\n\nFor the Hong Kong constituency, see Information Technology (constituency).',
+                  score: 45 // Add score
+                }
+              ],
+              nomineeResponses: [
+                {
+                  name: "Dilruwan",
+                  datetime: "23/08/2024 01:45:40 PM",
+                  shortlisted: false,
+                  committeeText: "Shortlist Nominee",
+                  comment: '"IT" redirects here. For the customer service colloquially referred to as IT, see Tech support. For other uses, see It (disambiguation).\n\n"Infotech" redirects here. For the Indian company, see Cyient.\n\nFor the Hong Kong constituency, see Information Technology (constituency).',
+                  score: 70 // Add score
+                }
+              ]
+            }
+          },
+
+
+
+
         ],
         preaward: [
           {
@@ -622,7 +692,7 @@ export class InMemoryDbService {
                   datetime: "23/08/2024 01:49:42 PM",
                   committeeText: "pre award nominee",
                   comment: "enhancing communication networks, and supporting organizational processes across various industries. Successful IT projects require meticulous planning, seamless integration, and ongoing maintenance to ensure optimal functionality and alignment with organizational objectives.",
-                  score: 92 // Add score
+                  score: 100 // Add score
                 }
               ]
             }
@@ -667,7 +737,7 @@ export class InMemoryDbService {
                   datetime: "23/08/2024 01:49:42 PM",
                   committeeText: "pre award nominee",
                   comment: "enhancing communication networks, and supporting organizational processes across various industries. Successful IT projects require meticulous planning, seamless integration, and ongoing maintenance to ensure optimal functionality and alignment with organizational objectives.",
-                  score: 92 // Add score
+                  score: 100 // Add score
                 }
               ]
             }
